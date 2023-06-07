@@ -2,22 +2,35 @@ import React from "react";
 import { Text, StyleSheet } from "react-native";
 import { Button, Card } from "react-native-paper";
 import styled from "styled-components/native";
+import { SvgXml } from "react-native-svg";
 
+import { star } from "../../../../assets/star";
+
+const Info = styled.View`
+  padding: ${(props) => props.theme.space[3]};
+`;
 const RestaurantCard = styled(Card)`
   elevation: 5;
-  backgroundcolor: Ivory;
+  color: ${(props) => props.theme.colors.brand.secondary};
 `;
 const RestaurantCardCover = styled(Card.Cover)`
-  padding: 15px;
-  backgroundcolor: Ivory;
+  padding: ${(props) => props.theme.space[3]};
+  color: ${(props) => props.theme.colors.brand.secondary};
 `;
 
 const Title = styled.Text`
-  padding: 16px;
-  font-size: 24px;
-  color: black;
-  font-weight: bold;
+  font-family: ${(props) => props.theme.fonts.heading};
+  font-size: ${(props) => props.theme.fontSizes.body};
+  color: ${(props) => props.theme.colors.ui.primary};
+  font-weight: ${(props) => props.theme.fontWeights.medium};
 `;
+const Address = styled.Text`
+  font-family: ${(props) => props.theme.fonts.body};
+  font-size: ${(props) => props.theme.fontSizes.caption};
+  color: ${(props) => props.theme.colors.ui.primary};
+  font-weight: ${(props) => props.theme.fontWeights.medium};
+`;
+
 export const RestaurantInfoCard = ({ restaurant = {} }) => {
   const {
     name = "Some Restaurant",
@@ -33,7 +46,11 @@ export const RestaurantInfoCard = ({ restaurant = {} }) => {
   return (
     <RestaurantCard>
       <RestaurantCardCover key={name} source={{ uri: photos[0] }} />
-      <Title>{name}</Title>
+      <Info>
+        <Title>{name}</Title>
+        <SvgXml xml={star} width={20} height={20} />
+        <Address>{address}</Address>
+      </Info>
     </RestaurantCard>
   );
 };
