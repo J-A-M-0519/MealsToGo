@@ -1,50 +1,51 @@
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import React from "react";
+import { ThemeProvider } from "styled-components/native";
+import * as firebase from "firebase";
+
 import {
   useFonts as useOswald,
   Oswald_400Regular,
 } from "@expo-google-fonts/oswald";
-import { SafeArea } from "./src/components/utility/safe-area.component";
-import { Text } from "react-native";
 import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
-import { RestaurantsScreen } from "./src/features/restaurants/screens/restaurants.screen";
-import { ThemeProvider } from "styled-components/native";
+
 import { theme } from "./src/infrastructure/theme";
-import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Navigation } from "./src/infrastructure/navigation";
 
-const Tab = createBottomTabNavigator();
+import { AuthenticationContextProvider } from "./src/services/authentication/authentication.context";
 
-const Settings = () => (
-  <SafeArea>
-    <Text>Settings</Text>
-  </SafeArea>
-);
-const Map = () => (
-  <SafeArea>
-    <Text>Map</Text>
-  </SafeArea>
-);
+const firebaseConfig = {
+  apiKey: "AIzaSyBmKwzXIQ_7iufDh4U6GyU_4Wc-hyDEnf8",
+  authDomain: "mealstogo-b2612.firebaseapp.com",
+  projectId: "mealstogo-b2612",
+  storageBucket: "mealstogo-b2612.appspot.com",
+  messagingSenderId: "158582890553",
+  appId: "1:158582890553:web:2ef50439fcd80f2ede2de8",
+};
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+
 export default function App() {
   const [oswaldLoaded] = useOswald({
     Oswald_400Regular,
   });
+
   const [latoLoaded] = useLato({
     Lato_400Regular,
   });
+
   if (!oswaldLoaded || !latoLoaded) {
     return null;
   }
+
   return (
     <>
       <ThemeProvider theme={theme}>
-        <NavigationContainer>
-          <Tab.Navigator>
-            <Tab.Screen name="Restaurants" component={RestaurantsScreen} />
-            <Tab.Screen name="Map" component={Map} />
-            <Tab.Screen name="Settings" component={Settings} />
-          </Tab.Navigator>
-        </NavigationContainer>
+        <AuthenticationContextProvider>
+          <Navigation />
+        </AuthenticationContextProvider>
       </ThemeProvider>
       <ExpoStatusBar style="auto" />
     </>
