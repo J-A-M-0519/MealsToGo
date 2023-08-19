@@ -18,7 +18,7 @@ export const colors = {
     secondary: "mediumpurple",
   },
   text: {
-    primary: "ivory",
+    primary: "black",
     secondary: "mediumpurple",
     disabled: "#9C9C9C",
     inverse: "#FFFFFF",

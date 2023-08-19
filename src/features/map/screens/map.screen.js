@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import MapView, { MapMarker } from "react-native-maps";
+import MapView, { Marker, Callout } from "react-native-maps";
 import styled from "styled-components/native";
 
 import { LocationContext } from "../../../services/location/location.context";
@@ -26,7 +26,6 @@ const RestaurantMap = ({ navigation }) => {
     const southwestLat = viewport.southwest.lat;
 
     setLatDelta(northeastLat - southwestLat);
-    r;
   }, [location, viewport]);
 
   return (
@@ -42,7 +41,7 @@ const RestaurantMap = ({ navigation }) => {
       >
         {restaurants.map((restaurant) => {
           return (
-            <MapMarker
+            <Marker
               key={restaurant.name}
               title={restaurant.name}
               coordinate={{
@@ -50,7 +49,7 @@ const RestaurantMap = ({ navigation }) => {
                 longitude: restaurant.geometry.location.lng,
               }}
             >
-              <MapView.Callout
+              <Callout
                 onPress={() =>
                   navigation.navigate("RestaurantDetail", {
                     restaurant,
@@ -58,8 +57,8 @@ const RestaurantMap = ({ navigation }) => {
                 }
               >
                 <MapCallout restaurant={restaurant} />
-              </MapView.Callout>
-            </MapMarker>
+              </Callout>
+            </Marker>
           );
         })}
       </Map>
@@ -73,8 +72,10 @@ export const MapScreen = ({ navigation }) => {
     return (
       <Map
         region={{
-          latitude: 0,
-          longitude: 0,
+          latitude: 1,
+          longitude: 1,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
         }}
       />
     );
