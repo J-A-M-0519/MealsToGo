@@ -21,7 +21,7 @@ export const AccountScreen = ({ navigation }) => {
           autoPlay
           loop
           resizeMode="cover"
-          source={require("../../../../../../../../MealsToGo/assets/watermelon.json")}
+          source={require("../../../../assets/watermelon.json")}
         />
       </AnimationWrapper>
       <Title>Meals To Go</Title>
